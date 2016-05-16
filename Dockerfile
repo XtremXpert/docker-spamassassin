@@ -27,10 +27,6 @@ RUN sed -i 's/^logfile = .*$/logfile = \/dev\/stderr/g' /etc/razor/razor-agent.c
 
 COPY rootfs /
 
-COPY spamd.sh /
-COPY rule-update.sh /
-COPY run.sh /
-
 EXPOSE 783
 
 CMD ["/opt/run.sh"]
