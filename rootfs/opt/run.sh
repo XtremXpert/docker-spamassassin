@@ -1,8 +1,8 @@
 #!/bin/bash
 set -m
 
-/rule-update.sh &
-/spamd.sh &
+/opt/rule-update.sh &
+/opt/spamd.sh &
 
 pids=`jobs -p`
 
