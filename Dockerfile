@@ -1,16 +1,16 @@
-FROM debian:jessie
+FROM debian:latest 
 
-MAINTAINER Christian Luginbühl <dinkel@pimprecords.com>
+MAINTAINER Benoît "XtremXpert" Vézina  <xtremxpert@xtremxpert.com>
 
-ENV SPAMASSASSIN_VERSION 3.4.0
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+    apt-get install --no-install-recommends -y \
         libmail-dkim-perl \
         libnet-ident-perl \
         pyzor \
         razor \
-        spamassassin=${SPAMASSASSIN_VERSION}* && \
+        spamassassin && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -25,12 +25,12 @@ RUN mkdir -p /etc/spamassassin/sa-update-keys && \
 
 RUN sed -i 's/^logfile = .*$/logfile = \/dev\/stderr/g' /etc/razor/razor-agent.conf
 
+COPY rootfs /
+
 COPY spamd.sh /
-
 COPY rule-update.sh /
-
 COPY run.sh /
 
 EXPOSE 783
 
-CMD ["/run.sh"]
+CMD ["/opt/run.sh"]
